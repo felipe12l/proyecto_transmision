@@ -50,6 +50,7 @@ class MainWindow(QMainWindow):
         # Selector de modulación
         modulation_label = QLabel("Modulación:")
         self.modulation_combo = QComboBox()
+        # Añadir más opciones de modulación
         self.modulation_combo.addItems(["AM", "ASK"])
         control_layout.addWidget(modulation_label)
         control_layout.addWidget(self.modulation_combo)
@@ -103,22 +104,24 @@ class MainWindow(QMainWindow):
         modulation_type = self.modulation_combo.currentText()
 
         if self.signal_combo.currentText() == "Digital":
+            ## Agregar los casos para las demás modulaciones ##
             if modulation_type == "AM":
                 bias = 0.5
                 modulation_index = 0.5
                 modulated_signal = am_modulate(
                     baseband_signal, t, carrier_freq, bias, modulation_index)
-            else:
+            elif modulation_type == "ASK":
                 a1 = 1.0
                 modulated_signal = ask_modulate(
                     baseband_signal, t, carrier_freq, a1)
         else:
+            ## Agregar los casos para las demás modulaciones ##
             if modulation_type == "AM":
                 bias = 0.5
                 modulation_index = 0.5
                 modulated_signal = am_modulate_analog(
                     baseband_signal, t, carrier_freq, bias, modulation_index)
-            else:
+            elif modulation_type == "ASK":
                 a1 = 1.0
                 threshold = 0.0
                 modulated_signal = ask_modulate_analog(
