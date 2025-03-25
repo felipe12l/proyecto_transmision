@@ -1,30 +1,24 @@
 import numpy as np
-def psk(digital_signal, baseband_amplitude, modulation_frequency, modulation_index=0.5, t=None):
-    """
-    Function to modulate a digital signal using Phase Shift Keying (PSK).
+def psk(array_values,fc,vc):
+    """_summary_
 
-    Parameters:
-    digital_signal (array-like): The digital signal to be modulated.
-    baseband_amplitude (float): The amplitude of the baseband signal.
-    modulation_frequency (float): The frequency of the modulation.
-    modulation_index (float, optional): The modulation index. Default is 0.5.
-    t (array-like, optional): Time vector for the modulation. If None, it will be generated.
-
-    Returns:
-    np.ndarray: The modulated PSK signal.
+    Args:
+        array_values (_type_): arreglo de valores digitales de la señal digital en 1 y 0
+        fc (_type_): frecuencia de la portadoraen Hz
+        vc (_type_): voltaje de la portadora
     """
-    
-    # Ensure the digital signal is a numpy array
-    digital_signal = np.asarray(digital_signal)
-    
-    # Generate time vector if not provided
-    if t is None:
-        t = np.arange(len(digital_signal)) / len(digital_signal)
-    
-    # Calculate the phase shift based on the digital signal
-    phase_shift = np.pi * modulation_index * digital_signal
-    
-    # Generate the PSK signal
-    psk_signal = baseband_amplitude * np.cos(2 * np.pi * modulation_frequency * t + phase_shift)
-    
-    return psk_signal
+    fs = 10000 
+    T_symbol = 0.01  # Duración de cada símbolo en segundos
+    t_symbol = np.linspace(0, T_symbol, int(fs * T_symbol), endpoint=False)
+    signal = np.array([])
+    base_2 = [(1<<i) for i in range(2-1, -1, -1)]
+
+    symbols = np.dot(array_values, base_2) 
+    for i in array_values:
+        if i == 1:
+            wave = vc*np.sin(2 * np.pi * fc * t_symbol)
+        else:
+            wave = -vc*np.sin(2 * np.pi * fc * t_symbol)
+        signal = np.concatenate((signal, wave))
+    t_total = np.linspace(0, len(symbols) * T_symbol, len(signal), endpoint=False)
+    return signal, t_total
