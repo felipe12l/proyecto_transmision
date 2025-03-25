@@ -132,4 +132,6 @@ class MainWindow(QMainWindow):
                 modulated_signal = ask_modulate_analog(
                     baseband_signal, t, carrier_freq, a1, threshold)
 
-        self.canvas.set_plots(t,baseband_signal, carrier, modulated_signal, modulation_type)
+        #units = [ axis x units, axis y units] 
+        #digitals meaning which signals are digitals = [ baseband, carrier, modulate] True if digital else False
+        self.canvas.set_plots(t,baseband_signal, carrier, modulated_signal, modulation_type, ['ms', 'V'], [True, False, False], sample_times, sample_vals)

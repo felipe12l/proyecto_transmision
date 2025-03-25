@@ -23,25 +23,44 @@ class PlotWidget(QWidget):
         self.canvas.mpl_connect("scroll_event", self.plot_scroll)
         self.canvas.mpl_connect("button_press_event", self.zoom_scroll)
 
-    def set_plots(self, t, baseband_signal, carrier, modulated_signal, modulation_type):
+    def set_plots(self, t, baseband_signal, carrier, modulated_signal, modulation_type, units, digitals, sample_times ,sample_vals ):
         # Limpiar solo los ejes sin borrar toda la figura
         for ax in self.axes:
             ax.clear()
         self.figure.subplots_adjust(hspace=0.8)  
-        
-        # Redibujar los gráficos en los ejes existentes
-        self.axes[0].plot(t, baseband_signal, color='blue')
-        self.axes[0].set_title("Señal moduladora")
-        self.axes[0].grid(True)
-        self.axes[0].set_xticks(np.linspace(t[0], t[-1], 5))
 
-        self.axes[1].plot(t, carrier, color='orange')
+        # Redibujar los gráficos en los ejes existentes
+        if( digitals[0] == True):
+            self.axes[0].step(t, baseband_signal, where='post', linewidth=1.5, color='b')
+            self.axes[0].scatter(sample_times, sample_vals, color='red', zorder=3)
+            
+        else:
+            self.axes[0].plot(t, baseband_signal, color='blue')
+            
+        self.axes[0].set_title("Señal moduladora")
+        self.axes[0].set_xlabel(f"Tiempo ({units[0]})")
+        self.axes[0].set_ylabel(f"Ampitud ({units[1]})")
+        self.axes[0].grid(True)
+
+        if( digitals[1] == True):
+            self.axes[1].step(t, carrier, where='post', linewidth=1.5, color='orange')
+        else:
+            self.axes[1].plot(t, carrier, color='orange')
+
+
         self.axes[1].set_title("Señal portadora")
+        self.axes[1].set_xlabel(f"Tiempo ({units[0]})")
+        self.axes[1].set_ylabel(f"Ampitud ({units[1]})")
         self.axes[1].grid(True)
 
-        self.axes[2].plot(t, modulated_signal, color='green')
+        if(digitals[2] == True):
+            self.axes[2].step(t, modulated_signal, where='post', linewidth=1.5, color='green')
+            self.axes[2].scatter(t + 1 / 2, modulated_signal, color='red', zorder=3)
+        else:
+            self.axes[2].plot(t, modulated_signal, color='green')
         self.axes[2].set_title(f"Señal modulada ({modulation_type})")
-        self.axes[2].set_xlabel("Tiempo (s)")
+        self.axes[2].set_xlabel(f"Tiempo ({units[0]})")
+        self.axes[2].set_ylabel(f"Ampitud ({units[1]})")
         self.axes[2].grid(True)
 
         # Redibujar la figura con los nuevos gráficos
