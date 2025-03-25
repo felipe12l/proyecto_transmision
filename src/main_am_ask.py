@@ -96,7 +96,7 @@ class MainWindow(QMainWindow):
             t, baseband_signal, sample_times, sample_vals = text_to_signal(
                 text)
         else:
-            file = "../AudioPrueba.wav"
+            file = "./AudioPrueba.wav"
             t, baseband_signal = anolog_input_wav(
                 file, start_time=0, end_time=2)
 
