@@ -1,7 +1,7 @@
 from matplotlib import pyplot as plt
 import numpy as np
 
-def pcm(values, M, pol_one = 1):
+def pcm(values, M, pol_one = 1, bit_duration_ms=1):
 
     n_bits = int(np.log2(M))
 
@@ -15,7 +15,12 @@ def pcm(values, M, pol_one = 1):
     bit_stream = [int(bit) for binary in bin_array for bit in binary]
 
     polar_signal = [pol_one if bit == 1 else -pol_one for bit in bit_stream]
-    return polar_signal
+
+    num_bits = len(polar_signal)
+    t = np.linspace(0, num_bits * bit_duration_ms, num_bits, endpoint=False)
+
+
+    return t,  polar_signal
 
 
 def plot_polar_square_wave(bit_stream, bit_duration_ms=1):

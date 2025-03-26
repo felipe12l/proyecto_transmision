@@ -29,7 +29,9 @@ def mpsk( sample_values:np.ndarray, M: int ):
     # Crear eje de tiempo total
     t_total = np.linspace(0, len(symbols) * T_symbol, len(signal), endpoint=False)
 
-    return signal, t_total
+    carrier = np.cos(2 * np.pi * fc * t_total)
+
+    return signal, t_total, carrier
 
 
 
