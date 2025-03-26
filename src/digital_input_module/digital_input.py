@@ -31,21 +31,18 @@ def text_to_signal(text: str):
 
 if __name__ == '__main__':
 
-<<<<<<< HEAD
     t, signal, sample_times, sample_values = text_to_signal('A')
     # m = 3  # Numero de divisiones para MPSK
     # sample_values = sample_values.astype(int)
     # if (len(sample_values) % m != 0):
     #     sample_values = np.append(
     #         sample_values, [0 for _ in range(m - (len(sample_values) % m))])
-=======
    
     t, signal, sample_times, sample_values =  text_to_signal('Hello ascci')
     m = 3 #Numero de divisiones para MPSK
     sample_values = sample_values.astype(int)
     if( len(sample_values) % m != 0):
        sample_values =  np.append(sample_values, [0 for _ in range(m - (len(sample_values)%m))])
->>>>>>> fm-psk
 
     # sample_values = sample_values.reshape(-1, m)
     # print(sample_values)
@@ -54,7 +51,6 @@ if __name__ == '__main__':
     # print(base_2)
     # sample_values = np.dot(sample_values, base_2)
     print(sample_values)
-<<<<<<< HEAD
 
     plt.figure(figsize=(10, 4))
     plt.plot(t, signal, label="Señal binaria")
@@ -66,7 +62,6 @@ if __name__ == '__main__':
     plt.legend()
     plt.grid()
     plt.show()
-=======
     # print(np.array(signal))
     # base_2 = [(1<<i) for i in range(m-1, -1, -1)]
     # print(base_2)
@@ -88,4 +83,3 @@ if __name__ == '__main__':
 
 
 
->>>>>>> fm-psk
