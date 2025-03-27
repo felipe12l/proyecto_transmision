@@ -175,6 +175,8 @@ class MainWindow(QMainWindow):
                 modulation_index = 0.5
                 carrier_freq = 6000 
                 carrier = np.cos(2 * np.pi * carrier_freq * t)
+                # Normaliza la señal para que oscile entre -1 y 1
+                baseband_signal = baseband_signal / np.max(np.abs(baseband_signal))
                 modulated_sign = am_modulate_analog(
                     baseband_signal, t, carrier_freq, bias, modulation_index)
                 modulated_signal = [t, modulated_sign]
