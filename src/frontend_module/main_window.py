@@ -7,8 +7,8 @@ from digital_input_module.digital_input import text_to_signal
 from analog_input_module.analog_input import anolog_input_wav
 
 from fm_module.fm import fm_modulate              
-from am_module.am import am_modulate, am_modulate_analog
-from ask_module.ask import ask_modulate, ask_modulate_analog
+from am_module.am import am_modulate_analog
+from ask_module.ask import ask_modulate
 
 from fsk_module.fsk import fsk_modulate
 from pcm_module.pcm import pcm
@@ -182,6 +182,10 @@ class MainWindow(QMainWindow):
 
 
                 carrier_signal = [t, carrier]
+
+                print("Amplitud máxima:", np.max(baseband_signal))
+                print("Amplitud mínima:", np.min(baseband_signal))
+                print("Amplitud absoluta máxima:", np.max(np.abs(baseband_signal)))
 
             elif modulation_type == 'FM':
                 base_signal, carrier_signal, modulated_signal = fm_modulate("./AudioPrueba.wav")
