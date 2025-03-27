@@ -6,10 +6,11 @@ import numpy as np
 from digital_input_module.digital_input import text_to_signal
 from analog_input_module.analog_input import anolog_input_wav
 
+from fm_module.fm import fm_modulate              
 from am_module.am import am_modulate, am_modulate_analog
 from ask_module.ask import ask_modulate, ask_modulate_analog
 
-
+from fsk_module.fsk import fsk_modulate
 from pcm_module.pcm import pcm
 from mpsk_module.mpsk import mpsk
 
@@ -155,9 +156,9 @@ class MainWindow(QMainWindow):
                 units = [['s', 'V'] for _ in range(3)]
                 digital_signals = [True, False, False]
             elif modulation_type == "FSK":
-                pass
-            elif modulation_type == "FSK":
-                pass
+                signal, t_total = fsk_modulate(text)
+                modulated_signal = [t_total, signal]
+                digital_signals = [True, False, False]
             elif modulation_type.__contains__('-PSK'):
                 m = int(modulation_type.split('-')[0])
                 vals, t_signal, carr_sign = mpsk(sample_vals, m)
@@ -183,7 +184,7 @@ class MainWindow(QMainWindow):
                 carrier_signal = [t, carrier]
 
             elif modulation_type == 'FM':
-                pass
+                base_signal, carrier_signal, modulated_signal = fm_modulate("./AudioPrueba.wav")
             elif modulation_type == 'PM':
                 pass
             elif modulation_type == 'PCM':
