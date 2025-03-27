@@ -173,7 +173,7 @@ class MainWindow(QMainWindow):
             if modulation_type == "AM":
                 bias = 0.5
                 modulation_index = 0.5
-                carrier_freq = 5000 
+                carrier_freq = 6000 
                 carrier = np.cos(2 * np.pi * carrier_freq * t)
                 modulated_sign = am_modulate_analog(
                     baseband_signal, t, carrier_freq, bias, modulation_index)
