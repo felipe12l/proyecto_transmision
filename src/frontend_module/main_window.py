@@ -89,7 +89,7 @@ class MainWindow(QMainWindow):
             self.text_input.show()
             self.play_button.hide()
 
-            self.modulation_combo.addItems(['ASK','FSK','PSk','4-PSK','8-PSK','16-PSK'])
+            self.modulation_combo.addItems(['ASK','FSK','2-PSK','4-PSK','8-PSK','16-PSK'])
 
 
         else:
@@ -162,6 +162,8 @@ class MainWindow(QMainWindow):
                 digital_signals = [True, False, False]
             elif modulation_type.__contains__('-PSK'):
                 m = int(modulation_type.split('-')[0])
+                
+                print(type(m))
                 vals, t_signal, carr_sign = mpsk(sample_vals, m)
                 modulated_signal = [t_signal,vals]
                 carrier_signal = [t_signal, carr_sign]
