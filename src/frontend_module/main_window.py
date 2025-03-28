@@ -202,6 +202,7 @@ class MainWindow(QMainWindow):
                 print(type(baseband_signal))
                 modulated_signal = pmModulation(carrier, baseband_signal, modulation_index)
                 modulated_signal = [t, modulated_signal]
+                carrier_signal = [t, carrier]
             elif modulation_type == 'PCM':
                 m_levels = 8
                 t, vals = pcm(baseband_signal, m_levels)
