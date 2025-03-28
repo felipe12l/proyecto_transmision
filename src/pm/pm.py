@@ -1,54 +1,21 @@
 import numpy as np
-import matplotlib.pyplot as plt
-from analog_input_module  import anolog_input_wav
 
-# def pm(modulation_signal,t, fc=5000, kp=np.pi):
-#     """
-#     Modulación de fase (PM) de una señal de audio.
-    
-#     Parámetros:
-#     sound: array_like
-#         Señal de audio a modular.
-#     t: array_like
-#         Eje de tiempo correspondiente a la señal de audio.
-#     fc: float
-#         Frecuencia de la portadora en Hz.
-#     kp: float
-#         Índice de modulación de fase.
-    
-#     Devuelve:
-#     modulated_signal: array_like
-#         Señal modulada en fase.
-#     """
-    
-#     Ac = 1  # Amplitud de la portadora
-#     modulated_signal = Ac * np.cos(2 * np.pi * fc * t + kp * modulation_signal)
-    
-#     return modulated_signal, t
-#     # Si la señal moduladora es una función de numpy, simplemente evalúa la función
-#     # en el eje de tiempo `t` antes de realizar la modulación.
-
-def pm_with_function(modulation_function, t, fc=5000, kp=np.pi):
+def pmModulation(portadora, mensaje, kp):
     """
-    Modulación de fase (PM) de una señal de audio cuando la señal moduladora es una función de numpy.
-        
+    Realiza la modulación en fase (PM) usando una portadora y un mensaje dados.
+
     Parámetros:
-    modulation_function: callable
-        Función de numpy que representa la señal moduladora.
-    t: array_like
-            Eje de tiempo correspondiente a la señal de audio.
-        fc: float
-            Frecuencia de la portadora en Hz.
-        kp: float
-            Índice de modulación de fase.
-        
-        Devuelve:
-        modulated_signal: array_like
-            Señal modulada en fase.
-        """
-        
-    modulation_signal = modulation_function(t)  # Evalúa la función en el eje de tiempo
-    Ac = 1  # Amplitud de la portadora
-    modulated_signal = Ac * np.cos(2 * np.pi * fc * t + kp * modulation_signal)
-        
-    return modulated_signal, t
+    - portadora: Señal portadora (numpy array)
+    - mensaje: Señal moduladora (mensaje) (numpy array)
+    - kp: Índice de modulación de fase
+
+    Retorna:
+    - modulada_pm: Señal modulada en fase
+    """
+    # Extraer la amplitud de la portadora
+    Ap = np.max(np.abs(portadora))  # Asume que la portadora tiene amplitud constante
+
+    # Generar la señal modulada en fase
+    modulada_pm = Ap * np.sin(np.angle(portadora) + kp * mensaje)
+
+    return modulada_pm

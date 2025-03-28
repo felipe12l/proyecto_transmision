@@ -19,8 +19,9 @@ from PyQt5.QtMultimedia import QMediaPlayer, QMediaContent
 from PyQt5.QtCore import QUrl
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas, NavigationToolbar2QT as NavigationToolbar
 from matplotlib.figure import Figure
-from . import plotWidget
 
+from . import plotWidget
+from pm.pm import pmModulation
 
 
 class MainWindow(QMainWindow):
@@ -192,7 +193,13 @@ class MainWindow(QMainWindow):
             elif modulation_type == 'FM':
                 base_signal, carrier_signal, modulated_signal = fm_modulate("./AudioPrueba.wav")
             elif modulation_type == 'PM':
-                pass
+                modulation_index = 0.5
+                carrier_freq = 6000 
+                carrier = np.cos(2 * np.pi * carrier_freq * t)
+                baseband_signal = baseband_signal / np.max(np.abs(baseband_signal))
+                print(type(baseband_signal))
+                modulated_signal = pmModulation(carrier, baseband_signal, modulation_index)
+                modulated_signal = [t, modulated_signal]
             elif modulation_type == 'PCM':
                 m_levels = 8
                 t, vals = pcm(baseband_signal, m_levels)
